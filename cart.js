@@ -110,7 +110,8 @@ couponBtn.addEventListener("click", () => {
             couponBtn.disabled = true;
             const discount = coupon.value;
             const price = parseFloat(totalPriceE.textContent);
-            totalDiscount = ((price / 100) * discount);
+            const couponDiscount = ((price / 100) * discount);
+            totalDiscount += couponDiscount;
             discountE.textContent = totalDiscount.toFixed(2) + " $";
             getTotalPrice();
         }
@@ -126,7 +127,8 @@ voucherBtn.addEventListener("click", () => {
             voucherAccepted = true;
             const discount = voucher.value;
             const price = parseFloat(totalPriceE.textContent);
-            totalDiscount = price - discount < 0 ? price : discount;
+            const voucherDiscount = price - discount < 0 ? price : discount;
+            totalDiscount += voucherDiscount;
             discountE.textContent = totalDiscount.toFixed(2) + " $";
             getTotalPrice();
         }
