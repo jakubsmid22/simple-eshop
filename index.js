@@ -1,6 +1,10 @@
 const featuredProductsE = document.getElementById("featuredProducts");
 const productTemplate = document.getElementById("productTemplate").content;
 
+const cart =  JSON.parse(localStorage.getItem("cart")) || [];
+
+console.log(cart);
+
 function getRandomProducts(products) {
     let result = [];
     let clone = products.slice();
@@ -24,7 +28,6 @@ fetch("https://fakestoreapi.com/products")
         return response.json();
     })
     .then(data => {
-        console.log(getRandomProducts(data));
         getRandomProducts(data).forEach(product => {
             const {category, description, id, image, price, rating, title} = product;
             const productE = productTemplate.cloneNode(true);
@@ -35,8 +38,6 @@ fetch("https://fakestoreapi.com/products")
             const priceE = productE.getElementById("price");
             const btn = productE.getElementById("btn");
 
-            console.log(rating);
-
             titleE.textContent = title;
             imgE.src = image;
             categoryE.textContent = category;
@@ -45,6 +46,11 @@ fetch("https://fakestoreapi.com/products")
 
 
             featuredProductsE.append(productE);
+
+            btn.addEventListener("click", () => {
+                cart.push(product);
+                localStorage.setItem("cart", JSON.stringify(cart));
+            })
 
         });
     })
